@@ -2,158 +2,187 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>YJBURN.CLOUD - INFERNO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yjburn - 가천대 반도체디스플레이 전공 정보통</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
+        /* 기본 설정 */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
+        body { background-color: #f8f9fa; color: #333; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
 
-        .scene {
-            position: relative;
-            width: 400px;
-            height: 600px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-        }
+        /* 네비게이션 바 */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: 700; color: #004b87; /* 가천대 네이비 느낌 */ }
+        .nav-links { display: flex; gap: 30px; font-weight: 500; }
+        .nav-links li:hover { color: #004b87; cursor: pointer; }
+        .login-btn { padding: 8px 20px; background-color: #004b87; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+        .login-btn:hover { background-color: #003366; }
 
-        /* 1. 장작 */
-        .logs {
-            position: absolute;
-            bottom: 30px;
-            width: 220px;
-            height: 40px;
-            background: #2b1a0d;
-            border-radius: 10px;
-            z-index: 1;
-            box-shadow: 0 0 30px #ff3d00, inset 0 0 20px #000;
-        }
+        /* 메인 히어로 섹션 */
+        .hero { text-align: center; padding: 100px 20px; background: linear-gradient(to right, #004b87, #007bff); color: white; }
+        .hero h1 { font-size: 40px; margin-bottom: 20px; }
+        .hero p { font-size: 18px; margin-bottom: 30px; font-weight: 300; }
+        .hero-btn { padding: 12px 30px; background-color: #fff; color: #004b87; border-radius: 25px; font-weight: bold; display: inline-block; transition: 0.3s; }
+        .hero-btn:hover { background-color: #e2e6ea; }
 
-        /* 2. 타오르는 캐릭터 (극도로 격렬한 움직임) */
-        .character {
-            position: absolute;
-            bottom: 120px;
-            width: 70px;
-            height: 180px;
-            z-index: 2;
-            animation: struggle 0.08s infinite alternate;
-        }
+        /* 정보 카드 섹션 */
+        .features { display: flex; justify-content: center; gap: 30px; padding: 60px 50px; flex-wrap: wrap; }
+        .card { background: #fff; width: 300px; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; transition: transform 0.3s; }
+        .card:hover { transform: translateY(-10px); }
+        .card i { font-size: 40px; color: #004b87; margin-bottom: 15px; }
+        .card h3 { font-size: 20px; margin-bottom: 10px; }
+        .card p { font-size: 14px; color: #666; }
 
-        .part { background: #fff; position: absolute; box-shadow: 0 0 10px #fff, 0 0 25px #ff3d00; border-radius: 3px; }
-        .head { width: 30px; height: 30px; border-radius: 50%; left: 20px; top: 0; }
-        .body { width: 8px; height: 75px; left: 31px; top: 25px; }
-        .arm { width: 6px; height: 60px; top: 35px; transform-origin: top center; }
-        .arm.l { left: 31px; animation: flail 0.08s infinite alternate; }
-        .arm.r { left: 31px; animation: flail 0.08s infinite alternate-reverse; }
-        .leg { width: 6px; height: 70px; top: 95px; transform-origin: top center; }
-        .leg.l { left: 31px; animation: flail 0.1s infinite alternate; }
-        .leg.r { left: 31px; animation: flail 0.1s infinite alternate-reverse; }
+        /* 푸터 */
+        footer { text-align: center; padding: 20px; background-color: #333; color: #ccc; font-size: 14px; }
 
-        /* 3. 거대 불기둥 (수직 상승 극대화) */
-        .fire-column {
-            position: absolute;
-            bottom: 40px;
-            width: 200px;
-            height: 550px;
-            filter: blur(12px) contrast(35);
-            background: #000;
-            mix-blend-mode: screen;
-            z-index: 3;
-            display: flex;
-            justify-content: center;
-        }
+        /* 모달 및 인증 폼 (제공한 코드 기반 UI 개선) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        
+        .auth-container { position: relative; width: 400px; min-height: 500px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; padding: 40px; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #888; z-index: 10; }
+        
+        .form-box { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 40px; transition: transform 0.6s ease-in-out; display: flex; flex-direction: column; justify-content: center; }
+        
+        /* 폼 초기 위치 설정 */
+        .form.sign-in { transform: translateX(0); }
+        .form.sign-up { transform: translateX(100%); }
+        .auth-container.active .form.sign-in { transform: translateX(-100%); }
+        .auth-container.active .form.sign-up { transform: translateX(0); }
 
-        .flame {
-            position: absolute;
-            bottom: 0;
-            border-radius: 50%;
-            animation: shoot-up ease-in infinite;
-            transform-origin: bottom center;
-        }
-
-        .flame:nth-child(1) { width: 140px; height: 140px; background: #ffeb3b; animation-duration: 0.6s; left: 30px; }
-        .flame:nth-child(2) { width: 120px; height: 120px; background: #ff9800; animation-duration: 0.5s; animation-delay: 0.1s; right: 30px; }
-        .flame:nth-child(3) { width: 160px; height: 160px; background: #f44336; animation-duration: 0.7s; animation-delay: 0.2s; left: 10px; }
-        .flame:nth-child(4) { width: 100px; height: 100px; background: #fff; animation-duration: 0.4s; animation-delay: 0.15s; }
-        .flame:nth-child(5) { width: 170px; height: 170px; background: #ff5722; animation-duration: 0.8s; animation-delay: 0.3s; right: 10px; }
-        .flame:nth-child(6) { width: 130px; height: 130px; background: #ffc107; animation-duration: 0.55s; animation-delay: 0.05s; }
-        .flame:nth-child(7) { width: 150px; height: 150px; background: #e65100; animation-duration: 0.65s; animation-delay: 0.25s; }
-
-        /* 4. 텍스트 영역 */
-        .text-container {
-            margin-top: 20px;
-            z-index: 5;
-            text-align: center;
-        }
-
-        .subtitle {
-            color: #ffae00;
-            font-size: 1.5rem;
-            font-family: 'Malgun Gothic', sans-serif;
-            font-weight: bold;
-            letter-spacing: 5px;
-            margin-bottom: 5px;
-            animation: text-pulse 0.2s infinite alternate;
-        }
-
-        .title {
-            color: #ff3d00;
-            font-size: 4.5rem;
-            font-family: 'Impact', sans-serif;
-            text-shadow: 0 0 30px #ff3d00;
-            letter-spacing: 3px;
-        }
-
-        /* 핵심 애니메이션: 위로만 솟구치고 길게 찢어짐 */
-        @keyframes shoot-up {
-            0% { transform: translateY(0) scale(1, 1); opacity: 1; }
-            100% { transform: translateY(-480px) scale(0.3, 3.5); opacity: 0; }
-        }
-        @keyframes struggle {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-6px); }
-        }
-        @keyframes flail {
-            0% { transform: rotate(10deg); }
-            100% { transform: rotate(170deg); }
-        }
-        @keyframes text-pulse {
-            from { opacity: 0.9; text-shadow: 0 0 10px #ff3d00; }
-            to { opacity: 1; text-shadow: 0 0 25px #ffae00; }
-        }
+        .auth-container h2 { text-align: center; margin-bottom: 20px; color: #004b87; }
+        .input-group { position: relative; margin-bottom: 15px; }
+        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888; }
+        .input-group input { width: 100%; padding: 12px 15px 12px 40px; border: 1px solid #ddd; border-radius: 5px; outline: none; font-size: 14px; }
+        .input-group input:focus { border-color: #004b87; }
+        
+        .auth-btn { width: 100%; padding: 12px; background-color: #004b87; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; }
+        .auth-btn:hover { background-color: #003366; }
+        
+        .auth-links { text-align: center; margin-top: 20px; font-size: 14px; }
+        .pointer { color: #004b87; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="scene">
-        <div class="logs"></div>
-        <div class="character">
-            <div class="part head"></div>
-            <div class="part body"></div>
-            <div class="part arm l"></div>
-            <div class="part arm r"></div>
-            <div class="part leg l"></div>
-            <div class="part leg r"></div>
+
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="logo">yjburn</div>
+        <ul class="nav-links">
+            <li>홈</li>
+            <li>전공 가이드</li>
+            <li>실습 및 기업</li>
+            <li>커뮤니티</li>
+        </ul>
+        <button class="login-btn" onclick="openModal()">로그인</button>
+    </nav>
+
+    <!-- 메인 히어로 섹션 -->
+    <header class="hero">
+        <h1>조기취업형 계약학과 반도체디스플레이 전공</h1>
+        <p>가천대 학우들을 위한 완벽한 정보 허브. 커리큘럼부터 협약 기업 정보까지 한곳에서.</p>
+        <a href="#features" class="hero-btn">사이트 둘러보기</a>
+    </header>
+
+    <!-- 핵심 기능 카드 섹션 -->
+    <section id="features" class="features">
+        <div class="card">
+            <i class='bx bx-book-bookmark'></i>
+            <h3>전공 가이드</h3>
+            <p>1학년 집중 과정 커리큘럼 및 필수 이수 과목에 대한 학업 가이드를 제공합니다.</p>
         </div>
-        <div class="fire-column">
-            <div class="flame"></div>
-            <div class="flame"></div>
-            <div class="flame"></div>
-            <div class="flame"></div>
-            <div class="flame"></div>
-            <div class="flame"></div>
-            <div class="flame"></div>
+        <div class="card">
+            <i class='bx bx-buildings'></i>
+            <h3>협약 기업 정보</h3>
+            <p>실무 실습을 진행할 취업 연계 협약 기업들의 상세 정보와 직무 리뷰를 확인하세요.</p>
+        </div>
+        <div class="card">
+            <i class='bx bx-message-square-dots'></i>
+            <h3>익명 커뮤니티</h3>
+            <p>전공 학우들끼리만 공유할 수 있는 학사 일정, 시험 정보, 실무 꿀팁 게시판입니다.</p>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>&copy; 2026 yjburn. 가천대학교 조기취업형 계약학과 반도체디스플레이 전공 학생들을 위한 비공식 정보 사이트입니다.</p>
+    </footer>
+
+    <!-- 로그인 / 회원가입 모달 (제공된 코드 결합 부분) -->
+    <div id="modalOverlay" class="modal-overlay" onclick="closeModal(event)">
+        <div class="auth-container" id="authContainer" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal(event)">&times;</span>
+            
+            <!-- 로그인 폼 -->
+            <div class="form-box form sign-in">
+                <h2>환영합니다</h2>
+                <div class="input-group">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" placeholder="학번 또는 아이디">
+                </div>
+                <div class="input-group">
+                    <i class='bx bxs-lock-alt'></i>
+                    <input type="password" placeholder="비밀번호">
+                </div>
+                <button class="auth-btn">로그인</button>
+                <div class="auth-links">
+                    <p>비밀번호를 잊으셨나요?</p>
+                    <p>계정이 없으신가요? <span onclick="toggleAuth()" class="pointer">회원가입 하기</span></p>
+                </div>
+            </div>
+
+            <!-- 회원가입 폼 -->
+            <div class="form-box form sign-up">
+                <h2>계정 만들기</h2>
+                <div class="input-group">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" placeholder="이름 (실명)">
+                </div>
+                <div class="input-group">
+                    <i class='bx bx-mail-send'></i>
+                    <input type="email" placeholder="학교 이메일 (@gachon.ac.kr)">
+                </div>
+                <div class="input-group">
+                    <i class='bx bxs-lock-alt'></i>
+                    <input type="password" placeholder="비밀번호">
+                </div>
+                <div class="input-group">
+                    <i class='bx bxs-lock-alt'></i>
+                    <input type="password" placeholder="비밀번호 확인">
+                </div>
+                <button class="auth-btn">가입하기</button>
+                <div class="auth-links">
+                    <p>이미 계정이 있으신가요? <span onclick="toggleAuth()" class="pointer">로그인 하기</span></p>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="text-container">
-        <div class="subtitle">서비스 준비 중...</div>
-        <div class="title">YJBURN.CLOUD</div>
-    </div>
+
+    <!-- 스크립트 기능 구현 -->
+    <script>
+        // 모달창 열기
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        // 모달창 닫기 (배경 클릭 또는 X 버튼)
+        function closeModal(event) {
+            if(event.target.id === 'modalOverlay' || event.target.className === 'close-btn') {
+                document.getElementById('modalOverlay').classList.remove('active');
+                // 모달이 닫힐 때 폼을 로그인 상태로 초기화
+                document.getElementById('authContainer').classList.remove('active');
+            }
+        }
+
+        // 로그인 <-> 회원가입 전환 토글 기능
+        function toggleAuth() {
+            const container = document.getElementById('authContainer');
+            container.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
