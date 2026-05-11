@@ -7,64 +7,81 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* 다크 테마 컬러 팔레트 변수 설정 */
+        :root {
+            --bg-main: #121212;
+            --bg-card: #1e1e1e;
+            --bg-nav: #1a1a1a;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent-color: #4facfe;
+            --accent-hover: #007bff;
+            --border-color: #333;
+        }
+
         /* 기본 설정 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
-        body { background-color: #f8f9fa; color: #333; line-height: 1.6; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
         /* 네비게이션 바 */
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 24px; font-weight: 700; color: #004b87; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: var(--bg-nav); box-shadow: 0 2px 10px rgba(0,0,0,0.5); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: 700; color: var(--accent-color); letter-spacing: 1px; }
         .nav-links { display: flex; gap: 30px; font-weight: 500; }
-        .nav-links li:hover { color: #004b87; cursor: pointer; }
-        .login-btn { padding: 8px 20px; background-color: #004b87; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
-        .login-btn:hover { background-color: #003366; }
+        .nav-links li:hover { color: var(--accent-color); cursor: pointer; transition: 0.3s; }
+        .login-btn { padding: 8px 20px; background-color: var(--accent-color); color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+        .login-btn:hover { background-color: var(--accent-hover); }
 
         /* 메인 히어로 섹션 */
-        .hero { text-align: center; padding: 100px 20px; background: linear-gradient(to right, #004b87, #007bff); color: white; }
-        .hero h1 { font-size: 40px; margin-bottom: 20px; }
-        .hero p { font-size: 18px; margin-bottom: 30px; font-weight: 300; }
-        .hero-btn { padding: 12px 30px; background-color: #fff; color: #004b87; border-radius: 25px; font-weight: bold; display: inline-block; transition: 0.3s; }
-        .hero-btn:hover { background-color: #e2e6ea; }
+        .hero { text-align: center; padding: 100px 20px; background: linear-gradient(to right, #001f3f, #003366); color: white; border-bottom: 1px solid var(--border-color); }
+        .hero h1 { font-size: 40px; margin-bottom: 20px; font-weight: 700; }
+        .hero p { font-size: 18px; margin-bottom: 30px; font-weight: 300; color: #d0d0d0; }
+        .hero-btn { padding: 12px 30px; background-color: var(--accent-color); color: #fff; border-radius: 25px; font-weight: bold; display: inline-block; transition: 0.3s; }
+        .hero-btn:hover { background-color: var(--accent-hover); box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4); }
 
         /* 정보 카드 섹션 */
         .features { display: flex; justify-content: center; gap: 30px; padding: 60px 50px; flex-wrap: wrap; }
-        .card { background: #fff; width: 300px; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; transition: transform 0.3s; }
-        .card:hover { transform: translateY(-10px); }
-        .card i { font-size: 40px; color: #004b87; margin-bottom: 15px; }
-        .card h3 { font-size: 20px; margin-bottom: 10px; }
-        .card p { font-size: 14px; color: #666; }
+        .card { background: var(--bg-card); width: 300px; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; transition: transform 0.3s, border 0.3s; border: 1px solid var(--border-color); }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
+        .card i { font-size: 40px; color: var(--accent-color); margin-bottom: 15px; }
+        .card h3 { font-size: 20px; margin-bottom: 10px; color: var(--text-main); }
+        .card p { font-size: 14px; color: var(--text-muted); }
 
         /* 푸터 */
-        footer { text-align: center; padding: 20px; background-color: #333; color: #ccc; font-size: 14px; }
+        footer { text-align: center; padding: 20px; background-color: #0a0a0a; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border-color); }
 
         /* 모달 및 인증 폼 */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(5px); }
         .modal-overlay.active { display: flex; }
         
-        .auth-container { position: relative; width: 400px; min-height: 520px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; padding: 40px; }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #888; z-index: 10; }
+        .auth-container { position: relative; width: 400px; min-height: 550px; background: var(--bg-card); border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; padding: 40px; border: 1px solid var(--border-color); }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: var(--text-muted); z-index: 10; transition: 0.3s; }
+        .close-btn:hover { color: #fff; }
         
         .form-box { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 40px; transition: transform 0.6s ease-in-out; display: flex; flex-direction: column; justify-content: center; }
         
+        /* 폼 초기 위치 설정 */
         .form.sign-in { transform: translateX(0); }
         .form.sign-up { transform: translateX(100%); }
         .auth-container.active .form.sign-in { transform: translateX(-100%); }
         .auth-container.active .form.sign-up { transform: translateX(0); }
 
-        .auth-container h2 { text-align: center; margin-bottom: 20px; color: #004b87; }
+        .auth-container h2 { text-align: center; margin-bottom: 25px; color: var(--text-main); font-weight: 700; }
         .input-group { position: relative; margin-bottom: 15px; }
-        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888; }
-        .input-group input, .input-group select { width: 100%; padding: 12px 15px 12px 40px; border: 1px solid #ddd; border-radius: 5px; outline: none; font-size: 14px; appearance: none; }
-        .input-group input:focus, .input-group select:focus { border-color: #004b87; }
-        .input-group select { padding-left: 15px; cursor: pointer; }
+        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); z-index: 2; }
         
-        .auth-btn { width: 100%; padding: 12px; background-color: #004b87; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; }
-        .auth-btn:hover { background-color: #003366; }
+        .input-group input, .input-group select { width: 100%; padding: 12px 15px 12px 40px; background-color: #2a2a2a; border: 1px solid var(--border-color); border-radius: 5px; outline: none; font-size: 14px; color: var(--text-main); appearance: none; position: relative; z-index: 1; }
+        .input-group select { cursor: pointer; }
+        .input-group input::placeholder { color: #888; }
+        .input-group input:focus, .input-group select:focus { border-color: var(--accent-color); }
         
-        .auth-links { text-align: center; margin-top: 20px; font-size: 14px; }
-        .pointer { color: #004b87; cursor: pointer; font-weight: bold; }
+        .auth-btn { width: 100%; padding: 12px; background-color: var(--accent-color); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 15px; transition: 0.3s; }
+        .auth-btn:hover { background-color: var(--accent-hover); }
+        
+        .auth-links { text-align: center; margin-top: 20px; font-size: 14px; color: var(--text-muted); }
+        .pointer { color: var(--accent-color); cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .pointer:hover { color: var(--accent-hover); text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -82,7 +99,7 @@
 
     <header class="hero">
         <h1>조기취업형 계약학과 반도체디스플레이 전공</h1>
-        <p>가천대 학우들을 위한 완벽한 정보 허브. 커리큘럼부터 협약 기업 정보까지 한곳에서.</p>
+        <p>가천대 학우님들을 위한 정보 허브입니다. 커리큘럼부터 협약 기업 정보까지 확인해 보세요.</p>
         <a href="#features" class="hero-btn">사이트 둘러보기</a>
     </header>
 
@@ -90,22 +107,22 @@
         <div class="card">
             <i class='bx bx-book-bookmark'></i>
             <h3>전공 가이드</h3>
-            <p>1학년 집중 과정 커리큘럼 및 필수 이수 과목에 대한 학업 가이드를 제공합니다.</p>
+            <p>1학년 집중 과정 커리큘럼 및 필수 이수 과목에 대한 학업 가이드를 제공해 드립니다.</p>
         </div>
         <div class="card">
             <i class='bx bx-buildings'></i>
             <h3>협약 기업 정보</h3>
-            <p>실무 실습을 진행할 취업 연계 협약 기업들의 상세 정보와 직무 리뷰를 확인하세요.</p>
+            <p>실무 실습을 진행할 취업 연계 협약 기업들의 상세 정보와 직무 리뷰를 확인하실 수 있습니다.</p>
         </div>
         <div class="card">
             <i class='bx bx-message-square-dots'></i>
             <h3>익명 커뮤니티</h3>
-            <p>전공 학우들끼리만 공유할 수 있는 학사 일정, 시험 정보, 실무 꿀팁 게시판입니다.</p>
+            <p>학우님들끼리 학사 일정, 시험 정보, 실무 꿀팁을 공유하는 익명 게시판입니다. (로그인 필요)</p>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 yjburn. 가천대학교 조기취업형 계약학과 반도체디스플레이 전공 학생들을 위한 비공식 정보 사이트입니다.</p>
+        <p>&copy; 2026 yjburn. 가천대학교 조기취업형 계약학과 반도체디스플레이 전공 학우님들을 위한 공간입니다.</p>
     </footer>
 
     <div id="modalOverlay" class="modal-overlay" onclick="closeModal(event)">
@@ -113,49 +130,45 @@
             <span class="close-btn" onclick="closeModal(event)">&times;</span>
             
             <div class="form-box form sign-in">
-                <h2>환영합니다</h2>
+                <h2>로그인</h2>
                 <div class="input-group">
                     <i class='bx bxs-user'></i>
-                    <input type="text" id="loginId" placeholder="이름 (ID로 사용)">
+                    <input type="text" id="loginId" placeholder="이름 (가입 시 실명)">
                 </div>
                 <div class="input-group">
-                    <select id="loginClass">
-                        <option value="" disabled selected>분반 선택</option>
+                    <i class='bx bxs-lock-alt'></i>
+                    <input type="password" id="loginPw" placeholder="비밀번호">
+                </div>
+                <button class="auth-btn" onclick="executeLogin()">로그인</button>
+                <div class="auth-links">
+                    <p>계정이 없으신가요? <span onclick="toggleAuth()" class="pointer">회원가입 하기</span></p>
+                </div>
+            </div>
+
+            <div class="form-box form sign-up">
+                <h2>회원가입</h2>
+                <div class="input-group">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" id="regName" placeholder="이름 (실명)">
+                </div>
+                <div class="input-group">
+                    <i class='bx bx-group'></i>
+                    <select id="regClass" style="padding-left: 40px;">
+                        <option value="" disabled selected>소속 반을 선택해 주세요</option>
                         <option value="A">A반</option>
                         <option value="B">B반</option>
                         <option value="C">C반</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <i class='bx bxs-lock-alt'></i>
-                    <input type="password" placeholder="비밀번호">
-                </div>
-                <button class="auth-btn" onclick="executeLogin()">로그인</button>
-                <div class="auth-links">
-                    <p>비밀번호를 잊으셨나요?</p>
-                    <p>계정이 없으신가요? <span onclick="toggleAuth()" class="pointer">회원가입 하기</span></p>
-                </div>
-            </div>
-
-            <div class="form-box form sign-up">
-                <h2>계정 만들기</h2>
-                <div class="input-group">
-                    <i class='bx bxs-user'></i>
-                    <input type="text" placeholder="이름 (실명)">
-                </div>
-                <div class="input-group">
                     <i class='bx bx-mail-send'></i>
-                    <input type="email" placeholder="학교 이메일 (@gachon.ac.kr)">
+                    <input type="email" id="regEmail" placeholder="학교 이메일 (@gachon.ac.kr)">
                 </div>
                 <div class="input-group">
                     <i class='bx bxs-lock-alt'></i>
-                    <input type="password" placeholder="비밀번호">
+                    <input type="password" id="regPw" placeholder="비밀번호">
                 </div>
-                <div class="input-group">
-                    <i class='bx bxs-lock-alt'></i>
-                    <input type="password" placeholder="비밀번호 확인">
-                </div>
-                <button class="auth-btn">가입하기</button>
+                <button class="auth-btn" onclick="executeSignUp()">가입하기</button>
                 <div class="auth-links">
                     <p>이미 계정이 있으신가요? <span onclick="toggleAuth()" class="pointer">로그인 하기</span></p>
                 </div>
@@ -180,21 +193,65 @@
             container.classList.toggle('active');
         }
 
-        // 로그인 실행 및 대시보드 연동 함수
-        function executeLogin() {
-            const userName = document.getElementById('loginId').value;
-            const userClass = document.getElementById('loginClass').value;
+        // 로컬 스토리지를 활용한 회원가입 처리
+        function executeSignUp() {
+            const name = document.getElementById('regName').value.trim();
+            const userClass = document.getElementById('regClass').value;
+            const email = document.getElementById('regEmail').value.trim();
+            const pw = document.getElementById('regPw').value;
 
-            if (!userName || !userClass) {
-                alert("이름과 반을 모두 입력 및 선택해야 합니다.");
+            if (!name || !userClass || !email || !pw) {
+                alert("모든 항목을 입력해 주십시오.");
                 return;
             }
 
-            localStorage.setItem('yjburn_name', userName);
-            localStorage.setItem('yjburn_class', userClass);
+            // 기존 유저 데이터 불러오기
+            let users = JSON.parse(localStorage.getItem('yjburn_users')) || [];
+
+            // 중복 이름 검사
+            const existingUser = users.find(u => u.name === name);
+            if (existingUser) {
+                alert("이미 등록된 이름입니다. 로그인을 진행해 주십시오.");
+                return;
+            }
+
+            // 새 유저 등록
+            users.push({ name: name, userClass: userClass, email: email, password: pw });
+            localStorage.setItem('yjburn_users', JSON.stringify(users));
             
-            // dashboard.html 파일로 라우팅
-            window.location.href = 'dashboard.html';
+            alert("회원가입이 완료되었습니다. 로그인해 주십시오.");
+            
+            // 입력창 초기화 후 로그인 화면으로 전환
+            document.getElementById('regName').value = '';
+            document.getElementById('regClass').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regPw').value = '';
+            toggleAuth();
+        }
+
+        // 저장된 데이터를 대조하는 로그인 처리
+        function executeLogin() {
+            const loginName = document.getElementById('loginId').value.trim();
+            const loginPw = document.getElementById('loginPw').value;
+
+            if (!loginName || !loginPw) {
+                alert("이름과 비밀번호를 입력해 주십시오.");
+                return;
+            }
+
+            // 스토리지에서 유저 데이터 검색
+            const users = JSON.parse(localStorage.getItem('yjburn_users')) || [];
+            const user = users.find(u => u.name === loginName && u.password === loginPw);
+
+            if (user) {
+                // 인증 성공: 세션에 이름과 반 정보를 기록하고 이동
+                localStorage.setItem('yjburn_name', user.name);
+                localStorage.setItem('yjburn_class', user.userClass);
+                window.location.href = 'dashboard.html';
+            } else {
+                // 인증 실패
+                alert("가입되지 않은 이름이거나 비밀번호가 일치하지 않습니다.");
+            }
         }
     </script>
 </body>
