@@ -1,10 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>YJBURN.CLOUD</title>
+    <meta charset="UTF-8">
+    <title>YJBURN.CLOUD - INFERNO</title>
+    <style>
+        body {
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .scene {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* 1. 장작 */
+        .logs {
+            position: absolute;
+            bottom: 30px;
+            width: 220px;
+            height: 40px;
+            background: #2b1a0d;
+            border-radius: 10px;
+            z-index: 1;
+            box-shadow: 0 0 30px #ff3d00, inset 0 0 20px #000;
+        }
+
+        /* 2. 타오르는 캐릭터 (극도로 격렬한 움직임) */
+        .character {
+            position: absolute;
+            bottom: 120px;
+            width: 70px;
+            height: 180px;
+            z-index: 2;
+            animation: struggle 0.08s infinite alternate;
+        }
+
+        .part { background: #fff; position: absolute; box-shadow: 0 0 10px #fff, 0 0 25px #ff3d00; border-radius: 3px; }
+        .head { width: 30px; height: 30px; border-radius: 50%; left: 20px; top: 0; }
+        .body { width: 8px; height: 75px; left: 31px; top: 25px; }
+        .arm { width: 6px; height: 60px; top: 35px; transform-origin: top center; }
+        .arm.l { left: 31px; animation: flail 0.08s infinite alternate; }
+        .arm.r { left: 31px; animation: flail 0.08s infinite alternate-reverse; }
+        .leg { width: 6px; height: 70px; top: 95px; transform-origin: top center; }
+        .leg.l { left: 31px; animation: flail 0.1s infinite alternate; }
+        .leg.r { left: 31px; animation: flail 0.1s infinite alternate-reverse; }
+
+        /* 3. 거대 불기둥 (수직 상승 극대화) */
+        .fire-column {
+            position: absolute;
+            bottom: 40px;
+            width: 200px;
+            height: 550px;
+            filter: blur(12px) contrast(35);
+            background: #000;
+            mix-blend-mode: screen;
+            z-index: 3;
+            display: flex;
+            justify-content: center;
+        }
+
+        .flame {
+            position: absolute;
+            bottom: 0;
+            border-radius: 50%;
+            animation: shoot-up ease-in infinite;
+            transform-origin: bottom center;
+        }
+
+        .flame:nth-child(1) { width: 140px; height: 140px; background: #ffeb3b; animation-duration: 0.6s; left: 30px; }
+        .flame:nth-child(2) { width: 120px; height: 120px; background: #ff9800; animation-duration: 0.5s; animation-delay: 0.1s; right: 30px; }
+        .flame:nth-child(3) { width: 160px; height: 160px; background: #f44336; animation-duration: 0.7s; animation-delay: 0.2s; left: 10px; }
+        .flame:nth-child(4) { width: 100px; height: 100px; background: #fff; animation-duration: 0.4s; animation-delay: 0.15s; }
+        .flame:nth-child(5) { width: 170px; height: 170px; background: #ff5722; animation-duration: 0.8s; animation-delay: 0.3s; right: 10px; }
+        .flame:nth-child(6) { width: 130px; height: 130px; background: #ffc107; animation-duration: 0.55s; animation-delay: 0.05s; }
+        .flame:nth-child(7) { width: 150px; height: 150px; background: #e65100; animation-duration: 0.65s; animation-delay: 0.25s; }
+
+        /* 4. 텍스트 영역 */
+        .text-container {
+            margin-top: 20px;
+            z-index: 5;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #ffae00;
+            font-size: 1.5rem;
+            font-family: 'Malgun Gothic', sans-serif;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin-bottom: 5px;
+            animation: text-pulse 0.2s infinite alternate;
+        }
+
+        .title {
+            color: #ff3d00;
+            font-size: 4.5rem;
+            font-family: 'Impact', sans-serif;
+            text-shadow: 0 0 30px #ff3d00;
+            letter-spacing: 3px;
+        }
+
+        /* 핵심 애니메이션: 위로만 솟구치고 길게 찢어짐 */
+        @keyframes shoot-up {
+            0% { transform: translateY(0) scale(1, 1); opacity: 1; }
+            100% { transform: translateY(-480px) scale(0.3, 3.5); opacity: 0; }
+        }
+        @keyframes struggle {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-6px); }
+        }
+        @keyframes flail {
+            0% { transform: rotate(10deg); }
+            100% { transform: rotate(170deg); }
+        }
+        @keyframes text-pulse {
+            from { opacity: 0.9; text-shadow: 0 0 10px #ff3d00; }
+            to { opacity: 1; text-shadow: 0 0 25px #ffae00; }
+        }
+    </style>
 </head>
 <body>
-    <h1>yjburn.cloud 서비스 준비 중</h1>
-    <p>조금만 기다려 주세요!</p>
+    <div class="scene">
+        <div class="logs"></div>
+        <div class="character">
+            <div class="part head"></div>
+            <div class="part body"></div>
+            <div class="part arm l"></div>
+            <div class="part arm r"></div>
+            <div class="part leg l"></div>
+            <div class="part leg r"></div>
+        </div>
+        <div class="fire-column">
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+        </div>
+    </div>
+    <div class="text-container">
+        <div class="subtitle">서비스 준비 중...</div>
+        <div class="title">YJBURN.CLOUD</div>
+    </div>
 </body>
 </html>
