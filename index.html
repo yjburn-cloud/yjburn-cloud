@@ -3,81 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>yjburn - 가천대 반도체디스플레이 전공 정보</title>
+    <title>yjburn - 가천대 반도체디스플레이 전공 정보통</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* 다크 테마 컬러 팔레트 변수 설정 */
         :root {
-            --bg-main: #121212;
-            --bg-card: #1e1e1e;
-            --bg-nav: #1a1a1a;
-            --text-main: #e0e0e0;
-            --text-muted: #a0a0a0;
-            --accent-color: #4facfe;
-            --accent-hover: #007bff;
-            --border-color: #333;
+            --bg-main: #121212; --bg-card: #1e1e1e; --bg-nav: #1a1a1a;
+            --text-main: #e0e0e0; --text-muted: #a0a0a0;
+            --accent-color: #4facfe; --accent-hover: #007bff; --border-color: #333;
         }
-
-        /* 기본 설정 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
         body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
-
-        /* 네비게이션 바 */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: var(--bg-nav); box-shadow: 0 2px 10px rgba(0,0,0,0.5); position: sticky; top: 0; z-index: 100; }
         .logo { font-size: 24px; font-weight: 700; color: var(--accent-color); letter-spacing: 1px; }
         .nav-links { display: flex; gap: 30px; font-weight: 500; }
         .nav-links li:hover { color: var(--accent-color); cursor: pointer; transition: 0.3s; }
         .login-btn { padding: 8px 20px; background-color: var(--accent-color); color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
         .login-btn:hover { background-color: var(--accent-hover); }
-
-        /* 메인 히어로 섹션 */
         .hero { text-align: center; padding: 100px 20px; background: linear-gradient(to right, #001f3f, #003366); color: white; border-bottom: 1px solid var(--border-color); }
         .hero h1 { font-size: 40px; margin-bottom: 20px; font-weight: 700; }
         .hero p { font-size: 18px; margin-bottom: 30px; font-weight: 300; color: #d0d0d0; }
         .hero-btn { padding: 12px 30px; background-color: var(--accent-color); color: #fff; border-radius: 25px; font-weight: bold; display: inline-block; transition: 0.3s; }
         .hero-btn:hover { background-color: var(--accent-hover); box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4); }
-
-        /* 정보 카드 섹션 */
         .features { display: flex; justify-content: center; gap: 30px; padding: 60px 50px; flex-wrap: wrap; }
         .card { background: var(--bg-card); width: 300px; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; transition: transform 0.3s, border 0.3s; border: 1px solid var(--border-color); }
         .card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
         .card i { font-size: 40px; color: var(--accent-color); margin-bottom: 15px; }
         .card h3 { font-size: 20px; margin-bottom: 10px; color: var(--text-main); }
         .card p { font-size: 14px; color: var(--text-muted); }
-
-        /* 푸터 */
         footer { text-align: center; padding: 20px; background-color: #0a0a0a; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border-color); }
-
-        /* 모달 및 인증 폼 */
+        
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(5px); }
         .modal-overlay.active { display: flex; }
-        
-        .auth-container { position: relative; width: 400px; min-height: 550px; background: var(--bg-card); border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; padding: 40px; border: 1px solid var(--border-color); }
+        .auth-container { position: relative; width: 400px; min-height: 580px; background: var(--bg-card); border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; padding: 40px; border: 1px solid var(--border-color); }
         .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: var(--text-muted); z-index: 10; transition: 0.3s; }
         .close-btn:hover { color: #fff; }
-        
         .form-box { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 40px; transition: transform 0.6s ease-in-out; display: flex; flex-direction: column; justify-content: center; }
-        
-        /* 폼 초기 위치 설정 */
         .form.sign-in { transform: translateX(0); }
         .form.sign-up { transform: translateX(100%); }
         .auth-container.active .form.sign-in { transform: translateX(-100%); }
         .auth-container.active .form.sign-up { transform: translateX(0); }
-
         .auth-container h2 { text-align: center; margin-bottom: 25px; color: var(--text-main); font-weight: 700; }
         .input-group { position: relative; margin-bottom: 15px; }
         .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); z-index: 2; }
-        
         .input-group input, .input-group select { width: 100%; padding: 12px 15px 12px 40px; background-color: #2a2a2a; border: 1px solid var(--border-color); border-radius: 5px; outline: none; font-size: 14px; color: var(--text-main); appearance: none; position: relative; z-index: 1; }
         .input-group select { cursor: pointer; }
         .input-group input::placeholder { color: #888; }
         .input-group input:focus, .input-group select:focus { border-color: var(--accent-color); }
         
-        .auth-btn { width: 100%; padding: 12px; background-color: var(--accent-color); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 15px; transition: 0.3s; }
+        .auth-btn { width: 100%; padding: 12px; background-color: var(--accent-color); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 5px; transition: 0.3s; }
         .auth-btn:hover { background-color: var(--accent-hover); }
+        .google-btn { background-color: #ffffff; color: #333; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .google-btn:hover { background-color: #f1f1f1; }
+        .google-btn i { font-size: 20px; color: #DB4437; }
         
         .auth-links { text-align: center; margin-top: 20px; font-size: 14px; color: var(--text-muted); }
         .pointer { color: var(--accent-color); cursor: pointer; font-weight: bold; transition: 0.3s; }
@@ -94,7 +74,7 @@
             <li>실습 및 기업</li>
             <li>커뮤니티</li>
         </ul>
-        <button class="login-btn" onclick="openModal()">로그인</button>
+        <button class="login-btn" onclick="window.openModal()">로그인</button>
     </nav>
 
     <header class="hero">
@@ -125,23 +105,26 @@
         <p>&copy; 2026 yjburn. 가천대학교 조기취업형 계약학과 반도체디스플레이 전공 학우님들을 위한 공간입니다.</p>
     </footer>
 
-    <div id="modalOverlay" class="modal-overlay" onclick="closeModal(event)">
+    <div id="modalOverlay" class="modal-overlay" onclick="window.closeModal(event)">
         <div class="auth-container" id="authContainer" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal(event)">&times;</span>
+            <span class="close-btn" onclick="window.closeModal(event)">&times;</span>
             
             <div class="form-box form sign-in">
                 <h2>로그인</h2>
                 <div class="input-group">
-                    <i class='bx bxs-user'></i>
-                    <input type="text" id="loginId" placeholder="이름 (가입 시 실명)">
+                    <i class='bx bx-mail-send'></i>
+                    <input type="email" id="loginEmail" placeholder="학교 이메일 (@gachon.ac.kr)">
                 </div>
                 <div class="input-group">
                     <i class='bx bxs-lock-alt'></i>
                     <input type="password" id="loginPw" placeholder="비밀번호">
                 </div>
-                <button class="auth-btn" onclick="executeLogin()">로그인</button>
+                <button class="auth-btn" onclick="window.executeLogin()">이메일로 로그인</button>
+                <button class="auth-btn google-btn" onclick="window.executeGoogleLogin()">
+                    <i class='bx bxl-google'></i> Google 계정으로 로그인
+                </button>
                 <div class="auth-links">
-                    <p>계정이 없으신가요? <span onclick="toggleAuth()" class="pointer">회원가입 하기</span></p>
+                    <p>계정이 없으신가요? <span onclick="window.toggleAuth()" class="pointer">회원가입 하기</span></p>
                 </div>
             </div>
 
@@ -166,35 +149,48 @@
                 </div>
                 <div class="input-group">
                     <i class='bx bxs-lock-alt'></i>
-                    <input type="password" id="regPw" placeholder="비밀번호">
+                    <input type="password" id="regPw" placeholder="비밀번호 (6자리 이상)">
                 </div>
-                <button class="auth-btn" onclick="executeSignUp()">가입하기</button>
+                <button class="auth-btn" onclick="window.executeSignUp()">가입하기</button>
                 <div class="auth-links">
-                    <p>이미 계정이 있으신가요? <span onclick="toggleAuth()" class="pointer">로그인 하기</span></p>
+                    <p>이미 계정이 있으신가요? <span onclick="window.toggleAuth()" class="pointer">로그인 하기</span></p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function openModal() {
-            document.getElementById('modalOverlay').classList.add('active');
-        }
-
-        function closeModal(event) {
+        window.openModal = function() { document.getElementById('modalOverlay').classList.add('active'); }
+        window.closeModal = function(event) {
             if(event.target.id === 'modalOverlay' || event.target.className === 'close-btn') {
                 document.getElementById('modalOverlay').classList.remove('active');
                 document.getElementById('authContainer').classList.remove('active');
             }
         }
+        window.toggleAuth = function() { document.getElementById('authContainer').classList.toggle('active'); }
+    </script>
 
-        function toggleAuth() {
-            const container = document.getElementById('authContainer');
-            container.classList.toggle('active');
-        }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-        // 로컬 스토리지를 활용한 회원가입 처리
-        function executeSignUp() {
+        // 본인의 파이어베이스 API 키로 교체 필요
+        const firebaseConfig = {
+            apiKey: "여기에_입력",
+            authDomain: "여기에_입력",
+            projectId: "여기에_입력",
+            storageBucket: "여기에_입력",
+            messagingSenderId: "여기에_입력",
+            appId: "여기에_입력"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // 이메일 회원가입
+        window.executeSignUp = async function() {
             const name = document.getElementById('regName').value.trim();
             const userClass = document.getElementById('regClass').value;
             const email = document.getElementById('regEmail').value.trim();
@@ -205,54 +201,83 @@
                 return;
             }
 
-            // 기존 유저 데이터 불러오기
-            let users = JSON.parse(localStorage.getItem('yjburn_users')) || [];
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, pw);
+                const user = userCredential.user;
+                await setDoc(doc(db, "users", user.uid), {
+                    name: name,
+                    userClass: userClass,
+                    email: email
+                });
 
-            // 중복 이름 검사
-            const existingUser = users.find(u => u.name === name);
-            if (existingUser) {
-                alert("이미 등록된 이름입니다. 로그인을 진행해 주십시오.");
+                alert("회원가입이 완료되었습니다. 로그인 화면으로 이동합니다.");
+                
+                document.getElementById('regName').value = '';
+                document.getElementById('regClass').value = '';
+                document.getElementById('regEmail').value = '';
+                document.getElementById('regPw').value = '';
+                window.toggleAuth(); 
+            } catch (error) {
+                console.error(error);
+                alert("회원가입에 실패했습니다.");
+            }
+        };
+
+        // 이메일 로그인
+        window.executeLogin = async function() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const pw = document.getElementById('loginPw').value;
+
+            if (!email || !pw) {
+                alert("이메일과 비밀번호를 입력해 주십시오.");
                 return;
             }
 
-            // 새 유저 등록
-            users.push({ name: name, userClass: userClass, email: email, password: pw });
-            localStorage.setItem('yjburn_users', JSON.stringify(users));
-            
-            alert("회원가입이 완료되었습니다. 로그인해 주십시오.");
-            
-            // 입력창 초기화 후 로그인 화면으로 전환
-            document.getElementById('regName').value = '';
-            document.getElementById('regClass').value = '';
-            document.getElementById('regEmail').value = '';
-            document.getElementById('regPw').value = '';
-            toggleAuth();
-        }
-
-        // 저장된 데이터를 대조하는 로그인 처리
-        function executeLogin() {
-            const loginName = document.getElementById('loginId').value.trim();
-            const loginPw = document.getElementById('loginPw').value;
-
-            if (!loginName || !loginPw) {
-                alert("이름과 비밀번호를 입력해 주십시오.");
-                return;
-            }
-
-            // 스토리지에서 유저 데이터 검색
-            const users = JSON.parse(localStorage.getItem('yjburn_users')) || [];
-            const user = users.find(u => u.name === loginName && u.password === loginPw);
-
-            if (user) {
-                // 인증 성공: 세션에 이름과 반 정보를 기록하고 이동
-                localStorage.setItem('yjburn_name', user.name);
-                localStorage.setItem('yjburn_class', user.userClass);
+            try {
+                await signInWithEmailAndPassword(auth, email, pw);
                 window.location.href = 'dashboard.html';
-            } else {
-                // 인증 실패
-                alert("가입되지 않은 이름이거나 비밀번호가 일치하지 않습니다.");
+            } catch (error) {
+                console.error(error);
+                alert("로그인에 실패했습니다. 자격 증명을 확인해 주십시오.");
             }
-        }
+        };
+
+        // 구글 로그인 연동
+        window.executeGoogleLogin = async function() {
+            const provider = new GoogleAuthProvider();
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                // 데이터베이스에 해당 구글 계정 정보가 존재하는지 확인
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+
+                // 최초 로그인 시 분반 정보 수집 처리
+                if (!docSnap.exists()) {
+                    let userClass = prompt("최초 구글 로그인입니다. 대시보드 시간표 연동을 위해 소속 반을 입력하십시오 (A, B, C 중 택 1).");
+                    userClass = userClass ? userClass.toUpperCase() : "";
+
+                    if(userClass !== 'A' && userClass !== 'B' && userClass !== 'C') {
+                        alert("정확한 분반을 입력하지 않아 회원가입이 취소됩니다.");
+                        await auth.signOut();
+                        return;
+                    }
+
+                    await setDoc(docRef, {
+                        name: user.displayName || "구글연동학우",
+                        userClass: userClass,
+                        email: user.email
+                    });
+                }
+
+                // 정보 확인 완료 후 대시보드 리다이렉트
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.error(error);
+                alert("구글 로그인 처리 중 오류가 발생했습니다.");
+            }
+        };
     </script>
 </body>
 </html>
